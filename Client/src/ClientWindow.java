@@ -7,8 +7,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientWindow extends JFrame {
-    private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 5555;
+    private static final String HOST = "localhost";
+    private static final int PORT = 5555;
     
     private Socket clientSocket;
     private ObjectInputStream in;
@@ -20,7 +20,7 @@ public class ClientWindow extends JFrame {
 
     public ClientWindow() {
         try {
-            clientSocket = new Socket(SERVER_HOST, SERVER_PORT);
+            clientSocket = new Socket(HOST, PORT);
             in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
         } catch (IOException ex) {

@@ -22,14 +22,14 @@ public class Client implements Runnable {
     public void run() {
         try {
             while (true) {
-                server.sendMessageToAll("New client connected!");
+                server.sendMessageToAll(new Message("","New client connected!"));
                 break;
             }
 
             while (true) {
                 if (in.available() != 0) {
                     String clientMessage = in.readUTF();
-                    server.sendMessageToAll(clientMessage);
+                    server.sendMessageToAll(new Message("",clientMessage));
                 }
                 Thread.sleep(100);
             }
@@ -42,9 +42,9 @@ public class Client implements Runnable {
         }
     }
     
-    public void sendMsg(String msg) {
+    public void sendMsg(Message msg) {
         try {
-            out.writeUTF(msg);
+            out.writeUTF(msg.getMessage());
             out.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
