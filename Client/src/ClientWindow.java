@@ -4,10 +4,9 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 
-public class ClientWindow extends JFrame implements Serializable {
+public class ClientWindow extends JFrame {
     private static final String HOST = "localhost";
     private static final int PORT = 5555;
     
