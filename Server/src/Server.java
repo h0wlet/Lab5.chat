@@ -17,7 +17,7 @@ public class Server {
             while (true) {
                 clientSocket = serverSocket.accept();
                 Client client = new Client(clientSocket, this);
-                clients.add(client);
+                addClient(client);
                 new Thread(client).start();
             }
         }
@@ -35,7 +35,11 @@ public class Server {
         }
     }
 
-    public void removeClient(Client client) {
+    public synchronized void addClient(Client client) {
+        clients.add(client);
+    }
+
+    public synchronized void removeClient(Client client) {
         clients.remove(client);
     }
 

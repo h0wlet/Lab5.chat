@@ -54,6 +54,7 @@ public class ClientWindow extends JFrame {
         jName = new JTextField("Your nickname: ");
         panel.add(jName, BorderLayout.WEST);
 
+
         jbSendMessage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,8 +99,6 @@ public class ClientWindow extends JFrame {
                 super.windowClosing(e);
                 try {
                     out.flush();
-                    out.close();
-                    in.close();
                     clientSocket.close();
                 } catch (IOException ex) {
                     ex.printStackTrace();
