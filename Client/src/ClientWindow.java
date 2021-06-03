@@ -79,11 +79,12 @@ public class ClientWindow extends JFrame {
             public void run() {
                 while (true) {
                     try {
-                        if (in.available() != 0) {
-                            String inMes = in.readUTF();
+                        if (in != null) {
+                            Message messageStr = (Message) in.readObject();
+                            String inMes = messageStr.getNickname() + ": " + messageStr.getMessage();
                             jText.append(inMes + "\n");
                         }
-                    } catch (IOException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
@@ -95,7 +96,6 @@ public class ClientWindow extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 try {
-                    out.writeUTF("Client disconnected!");
                     out.flush();
                     out.close();
                     in.close();
@@ -111,7 +111,8 @@ public class ClientWindow extends JFrame {
 
     public void sendMsg() throws IOException {
         Message messageStr = new Message(jName.getText(), jMessage.getText());
-        out.writeUTF(messageStr.getNickname() + ": " + messageStr.getMessage());
+        //out.writeUTF(messageStr.getNickname() + ": " + messageStr.getMessage());
+        out.writeObject(messageStr);
         out.flush();
         jMessage.setText("");
     }

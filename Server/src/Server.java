@@ -35,13 +35,15 @@ public class Server {
         }
     }
 
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
     public void sendMessageToAll(Message msg) {
         for (Client o : clients) {
             o.sendMsg(msg);
         }
     }
 
-    public void removeClient(Client client) {
-        clients.remove(client);
-    }
+
 }

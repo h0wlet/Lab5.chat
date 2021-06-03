@@ -11,8 +11,8 @@ public class Client implements Runnable {
     public Client(Socket socket, Server server) {
         try {
             this.server = server;
-            this.in = new ObjectInputStream(socket.getInputStream());
-            this.out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -27,14 +27,14 @@ public class Client implements Runnable {
             }
 
             while (true) {
-                if (in.available() != 0) {
-                    String clientMessage = in.readUTF();
-                    server.sendMessageToAll(new Message("",clientMessage));
+                if (in != null) {
+                    Message clientMessage = (Message) in.readObject();
+                    server.sendMessageToAll(clientMessage);
                 }
                 Thread.sleep(100);
             }
         }
-        catch (InterruptedException | IOException ex) {
+        catch (InterruptedException | IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
         finally {
@@ -44,7 +44,7 @@ public class Client implements Runnable {
     
     public void sendMsg(Message msg) {
         try {
-            out.writeUTF(msg.getMessage());
+            out.writeObject(msg);
             out.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
