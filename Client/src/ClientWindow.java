@@ -4,9 +4,10 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
-public class ClientWindow extends JFrame {
+public class ClientWindow extends JFrame implements Serializable {
     private static final String HOST = "localhost";
     private static final int PORT = 5555;
     
@@ -21,8 +22,9 @@ public class ClientWindow extends JFrame {
     public ClientWindow() {
         try {
             clientSocket = new Socket(HOST, PORT);
-            in = new ObjectInputStream(clientSocket.getInputStream());
+
             out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -111,7 +113,6 @@ public class ClientWindow extends JFrame {
 
     public void sendMsg() throws IOException {
         Message messageStr = new Message(jName.getText(), jMessage.getText());
-        //out.writeUTF(messageStr.getNickname() + ": " + messageStr.getMessage());
         out.writeObject(messageStr);
         out.flush();
         jMessage.setText("");

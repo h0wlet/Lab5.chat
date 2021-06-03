@@ -11,8 +11,8 @@ public class Client implements Runnable {
     public Client(Socket socket, Server server) {
         try {
             this.server = server;
-            in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
+            this.in = new ObjectInputStream(socket.getInputStream());
+            this.out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -22,7 +22,7 @@ public class Client implements Runnable {
     public void run() {
         try {
             while (true) {
-                server.sendMessageToAll(new Message("","New client connected!"));
+                server.sendMessageToAll(new Message("SERVER","New client connected!"));
                 break;
             }
 
